@@ -3,8 +3,8 @@
 
 #include "avif/avif.h"
 
-#include <string.h>
 #include <stdio.h>
+#include <string.h>
 
 int syntax(void)
 {
@@ -49,12 +49,30 @@ int main(int argc, char * argv[])
 
     avifImage * avif = avifImageCreateEmpty();
     avifDecoder * decoder = avifDecoderCreate();
-    avifResult decodeResult = avifDecoderRead(decoder, avif, &raw);
-    if (decodeResult == AVIF_RESULT_OK) {
+
+    avifResult result = avifDecoderParse(decoder, &raw);
+    if (result == AVIF_RESULT_OK) {
         printf("Image decoded: %s\n", inputFilename);
+        int frameIndex = 0;
+        while (avifDecoderNextImage(decoder) == AVIF_RESULT_OK) {
+            printf("* Decoded frame [%d]: %dx%d\n", frameIndex, decoder->image->width, decoder->image->height);
+            ++frameIndex;
+        }
+        result = avifDecoderReset(decoder);
+        if (result == AVIF_RESULT_OK) {
+            printf("Image decoded again: %s\n", inputFilename);
+            frameIndex = 0;
+            while (avifDecoderNextImage(decoder) == AVIF_RESULT_OK) {
+                printf("* Decoded frame [%d]: %dx%d\n", frameIndex, decoder->image->width, decoder->image->height);
+                ++frameIndex;
+            }
+        } else {
+            printf("ERROR: Failed to reset decode: %s\n", avifResultToString(result));
+        }
     } else {
-        printf("ERROR: Failed to decode image: %s\n", avifResultToString(decodeResult));
+        printf("ERROR: Failed to decode image: %s\n", avifResultToString(result));
     }
+
     avifRawDataFree(&raw);
     avifDecoderDestroy(decoder);
     avifImageDestroy(avif);
