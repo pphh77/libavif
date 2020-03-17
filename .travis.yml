@@ -37,18 +37,6 @@ script:
 
 matrix:
   include:
-  - name: "GCC Debug"
-    compiler: gcc
-    config: Debug
-  - name: "GCC Release"
-    compiler: gcc
-    config: Release
-  - name: "Clang Debug"
-    compiler: clang
-    config: Debug
-  - name: "Clang Release"
-    compiler: clang
-    config: Release
   - name: "Clang 11 Debug"
     compiler: clang
     config: Debug
@@ -57,7 +45,7 @@ matrix:
         sources: *all_sources
         packages:
         - clang-11
-    env: COMPILER='clang++-11' LLVM_CONFIG='/usr/bin/llvm-config-11'
+    env: CC='clang-11' LLVM_CONFIG='/usr/bin/llvm-config-11'
   - name: "Clang 11 Release"
     compiler: clang
     config: Release
@@ -66,4 +54,4 @@ matrix:
         sources: *all_sources
         packages:
         - clang-11
-    env: COMPILER='clang++-11' LLVM_CONFIG='/usr/bin/llvm-config-11'
+    env: CC='clang-11' LLVM_CONFIG='/usr/bin/llvm-config-11'
