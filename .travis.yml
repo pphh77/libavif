@@ -49,21 +49,21 @@ matrix:
   - name: "Clang Release"
     compiler: clang
     config: Release
-  - name: "Clang 10 Debug"
+  - name: "Clang 11 Debug"
     compiler: clang
     config: Debug
     addons:
       apt:
         sources: *all_sources
         packages:
-        - clang-10
-    env: COMPILER='clang++-10' LLVM_CONFIG='/usr/bin/llvm-config-10'
-  - name: "Clang 10 Release"
+        - clang-11
+    env: COMPILER='clang++-11' LLVM_CONFIG='/usr/bin/llvm-config-11'
+  - name: "Clang 11 Release"
     compiler: clang
     config: Release
     addons:
       apt:
         sources: *all_sources
         packages:
-        - clang-10
-    env: COMPILER='clang++-10' LLVM_CONFIG='/usr/bin/llvm-config-10'
+        - clang-11
+    env: COMPILER='clang++-11' LLVM_CONFIG='/usr/bin/llvm-config-11'
