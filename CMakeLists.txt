@@ -230,7 +230,7 @@ if(AVIF_CODEC_RAV1E)
     endif()
 
     # Unfortunately, rav1e requires a few more libraries
-    if(WIN32)
+    if(MSVC)
         set(AVIF_PLATFORM_LIBRARIES ${AVIF_PLATFORM_LIBRARIES} ws2_32.lib userenv.lib)
     elseif(UNIX AND NOT APPLE)
         set(AVIF_PLATFORM_LIBRARIES ${AVIF_PLATFORM_LIBRARIES} ${CMAKE_DL_LIBS}) # for backtrace
@@ -244,7 +244,7 @@ if(AVIF_CODEC_AOM)
         src/codec_aom.c
     )
     if(AVIF_LOCAL_AOM)
-        if(WIN32)
+        if(MSVC)
             set(LIB_FILENAME "${CMAKE_CURRENT_SOURCE_DIR}/ext/aom/build.libavif/aom.lib")
         else()
             set(LIB_FILENAME "${CMAKE_CURRENT_SOURCE_DIR}/ext/aom/build.libavif/libaom.a")
